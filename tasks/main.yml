@@ -1,0 +1,26 @@
+---
+- name: Copy sshd configuration
+  template:
+    src: sshd_config
+    dest: '/etc/ssh/sshd_config'
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+    validate: /usr/sbin/sshd -t -f %s
+
+
+- name: Remove unwanted host keys
+  file:
+    path: '/etc/ssh/ssh_host_{{ item }}_key'
+    state: absent
+  with_items:
+    - ecdsa
+    - rsa
+    - dsa
+- file:
+    path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
+    state: absent
+  with_items:
+    - ecdsa
+    - rsa
+    - dsa
