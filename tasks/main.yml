@@ -7,6 +7,17 @@
     group: root
     mode: 'u=rw,g=r,o=r'
     validate: /usr/sbin/sshd -t -f %s
+  notify:
+    - restart ssh
+
+
+- name: Generate new ed25519 ssh host key pair if necessary
+  command: ssh-keygen -t ed25519 -f 'ssh_host_ed25519_key' -P '' -q
+  args:
+    chdir: '/etc/ssh/'
+    creates: 'ssh_host_ed25519_key.pub'
+  notify:
+    - restart ssh
 
 
 - name: Remove unwanted host keys
@@ -17,6 +28,8 @@
     - ecdsa
     - rsa
     - dsa
+  notify:
+    - restart ssh
 - file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
     state: absent
@@ -24,3 +37,5 @@
     - ecdsa
     - rsa
     - dsa
+  notify:
+    - restart ssh
