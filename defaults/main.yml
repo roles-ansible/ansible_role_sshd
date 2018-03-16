@@ -1,7 +1,0 @@
-# List of users for the 'AllowUsers' keyword
-sshd_allow_users:
-  - root
-
-# List of groups for the 'AllowGroups' keyword
-sshd_allow_groups:
-  - root

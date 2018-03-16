@@ -7,12 +7,6 @@ Ansible role to configure the OpenSSH `ssh` server.
 Variables
 ---------
 
-* `sshd_allow_users` (default `[root]`):
-  List of users for the `AllowUsers` keyword
-
-* `sshd_allow_groups` (default `[root]`):
-  List of groups for the `AllowGroups` keyword
-
 
 Files
 -----
