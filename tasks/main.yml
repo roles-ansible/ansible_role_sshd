@@ -1,4 +1,10 @@
 ---
+- name: Collect all users and groups allowed to login via ssh
+  set_fact:
+    sshd_allow_users:  '{{ ["root"] + users.keys() | default({}) | sort }}'
+    sshd_allow_groups: '{{ ["root"] + users.keys() | default({}) | sort }}'
+
+
 - name: Copy sshd configuration
   template:
     src: sshd_config

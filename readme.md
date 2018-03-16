@@ -14,6 +14,12 @@ Variables
   List of groups for the `AllowGroups` keyword
 
 
+Files
+-----
+
+* `sshd.conf`:
+
+
 References
 ----------
 
