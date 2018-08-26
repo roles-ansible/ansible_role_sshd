@@ -7,6 +7,8 @@ Ansible role to configure the OpenSSH `ssh` server.
 Variables
 ---------
 
+* `restrict_allow_users`: enable the `AllowUsers` and `AllowGroups` options.
+
 
 Files
 -----

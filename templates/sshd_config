@@ -32,8 +32,10 @@ UsePAM yes
 
 
 # User Authentication
+{% if restrict_allow_users|default(True) %}
 AllowUsers {{ sshd_allow_users|join(' ') }}
 AllowGroups {{ sshd_allow_groups|join(' ') }}
+{% endif %}
 PermitRootLogin without-password
 
 LoginGraceTime 120
