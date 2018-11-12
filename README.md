@@ -2,6 +2,10 @@ OpenSSH Server
 ==============
 
 Ansible role to configure the OpenSSH `ssh` server.
+Use Eliptic cureve cryptografie for your ssh keys e.g.:
+```bash
+ssh-keygen -t ed25519
+```
 
 
 Variables
@@ -9,6 +13,17 @@ Variables
 
 * `restrict_allow_users`: enable the `AllowUsers` and `AllowGroups` options.
 
++ `users`: which user is allowed to login. 
+
+Example config:
+```bash
+users:
+  l3d:
+    - l3d
+  ottojo:
+   - ottojo@uni
+   - ottojo@home
+```
 
 Files
 -----
