@@ -1,8 +1,18 @@
 ---
+
+- name: register os-specific variables
+  include_vars: default.yml
+  when: ansible_distribution != 'Fedora'
+
+- name: register os-specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Fedora'
+
+
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
-    sshd_allow_users:  '{{ ["root"] + users.keys() | default({}) | sort }}'
-    sshd_allow_groups: '{{ ["root"] + users.keys() | default({}) | sort }}'
+    sshd_allow_users:  '{{ ["root", "ansible"] + users.keys() | default({}) | sort }}'
+    sshd_allow_groups: '{{ ["root", "admins"] + users.keys() | default({}) | sort }}'
 
 
 - name: Copy sshd configuration
@@ -45,3 +55,4 @@
     - dsa
   notify:
     - restart ssh
+
