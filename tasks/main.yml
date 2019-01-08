@@ -46,6 +46,7 @@
     - dsa
   notify:
     - restart ssh
+
 - file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
     state: absent
