@@ -2,11 +2,15 @@
 
 - name: register os-specific variables
   include_vars: default.yml
-  when: ansible_distribution != 'Fedora'
+  when: 
+   - ansible_distribution != 'Fedora'
+   - ansible_distribution != 'Archlinux'
 
 - name: register os-specific variables
   include_vars: "{{ ansible_distribution }}.yml"
-  when: ansible_distribution == 'Fedora'
+  when: 
+   - ansible_distribution == 'Fedora'
+   - ansible_distribution == 'Archlinux'
 
 
 - name: Collect all users and groups allowed to login via ssh
@@ -23,6 +27,7 @@
     group: root
     mode: 'u=rw,g=r,o=r'
     validate: /usr/sbin/sshd -t -f %s
+  become: yes
   notify:
     - restart ssh
 
@@ -32,9 +37,9 @@
   args:
     chdir: '/etc/ssh/'
     creates: 'ssh_host_ed25519_key.pub'
+  become: yes
   notify:
     - restart ssh
-
 
 - name: Remove unwanted host keys
   file:
@@ -44,6 +49,7 @@
     - ecdsa
     - rsa
     - dsa
+  become: yes
   notify:
     - restart ssh
 
@@ -54,6 +60,7 @@
     - ecdsa
     - rsa
     - dsa
+  become: yes
   notify:
     - restart ssh
 
