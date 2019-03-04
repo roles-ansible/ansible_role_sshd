@@ -1,5 +1,8 @@
 ---
 - name: restart ssh
+  become: yes
   service:
     name: "{{ ssh_service }}"
     state: restarted
+  when: ssh_service is defined
+
