@@ -20,6 +20,7 @@
 
 
 - name: Copy sshd configuration
+  become: yes
   template:
     src: sshd_config
     dest: '/etc/ssh/sshd_config'
@@ -27,21 +28,21 @@
     group: root
     mode: 'u=rw,g=r,o=r'
     validate: /usr/sbin/sshd -t -f %s
-  become: yes
   notify:
     - restart ssh
 
 
 - name: Generate new ed25519 ssh host key pair if necessary
+  become: yes
   command: ssh-keygen -t ed25519 -f 'ssh_host_ed25519_key' -P '' -q
   args:
     chdir: '/etc/ssh/'
     creates: 'ssh_host_ed25519_key.pub'
-  become: yes
   notify:
     - restart ssh
 
 - name: Remove unwanted host keys
+  become: yes
   file:
     path: '/etc/ssh/ssh_host_{{ item }}_key'
     state: absent
@@ -49,18 +50,17 @@
     - ecdsa
     - rsa
     - dsa
-  become: yes
   notify:
     - restart ssh
 
 - file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
     state: absent
+  become: yes
   with_items:
     - ecdsa
     - rsa
     - dsa
-  become: yes
   notify:
     - restart ssh
 
