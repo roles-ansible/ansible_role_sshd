@@ -12,12 +12,10 @@
    - ansible_distribution == 'Fedora'
    - ansible_distribution == 'Archlinux'
 
-
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
     sshd_allow_users:  '{{ sshd_default_allowed_users + users.keys() | default({}) | sort }}'
-    sshd_allow_groups: '{{ ["root", "admins"] + users.keys() | default({}) | sort }}'
-
+    sshd_allow_groups: '{{ sshd_default_allowed_groups + users.keys() | default({}) | sort }}'
 
 - name: Copy sshd configuration
   become: yes

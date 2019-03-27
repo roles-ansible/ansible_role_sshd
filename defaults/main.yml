@@ -4,5 +4,11 @@ sshd_default_allowed_users:
   - "root"
   - "ansible"
 
+# don't forget to add the ssh_access group!
+sshd_default_allowed_groups:
+  - "root"
+  - "admins"
+
+
 # Enable AllowUsers and AllowGroups options
 restrict_allow_users: True
