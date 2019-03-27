@@ -15,7 +15,7 @@
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
-    sshd_allow_users:  '{{ ["root", "ansible"] + users.keys() | default({}) | sort }}'
+    sshd_allow_users:  '{{ sshd_default_allowed_users + users.keys() | default({}) | sort }}'
     sshd_allow_groups: '{{ ["root", "admins"] + users.keys() | default({}) | sort }}'
 
 

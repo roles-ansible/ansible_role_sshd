@@ -24,6 +24,7 @@ users:
    - ottojo@uni
    - ottojo@home
 ```
+*have a look into defaults/main.yml foraditionally informations!*
 
 Files
 -----
