@@ -14,5 +14,5 @@ sshd_default_allowed_groups:
 restrict_allow_users: True
 
 # Allow login with password?
-sshd_password_authentication: no
+sshd_password_authentication: 'no' # 'yes' or 'no'
  
