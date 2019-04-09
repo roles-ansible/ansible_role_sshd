@@ -21,6 +21,6 @@ sshd_password_authentication: 'no' # 'yes' or 'no'
 
 # Allow optional cryptho methods (NOT RECOMENDED)
 generate_ecdsa_too: false
-use_diffie-hellman-group-exchange-sha256: false
-use_aes256-ctr: false
-use_hmac-sha2-512: false
+use_diffie_hellman_group_exchange_sha256: false
+use_aes256_ctr: false
+use_hmac_sha2_512: false

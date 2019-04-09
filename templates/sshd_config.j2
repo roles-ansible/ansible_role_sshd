@@ -12,7 +12,7 @@ TCPKeepAlive yes
 #KexAlgorithms curve25519-sha256@libssh.org,
 #              diffie-hellman-group-exchange-sha256
 KexAlgorithms curve25519-sha256@libssh.org{%
-if use_diffie-hellman-group-exchange-sha256 %},diffie-hellman-group-exchange-sha256{% endif %}
+if use_diffie_hellman_group_exchange_sha256 %},diffie-hellman-group-exchange-sha256{% endif %}
 
 
 # Server authentication
@@ -59,7 +59,7 @@ endif %}PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
 #        aes192-ctr,
 #        aes128-ctr
 Ciphers chacha20-poly1305@openssh.com{%
-if use_aes256-ctr %},aes256-ctr{% endif %}
+if use_aes256_ctr %},aes256-ctr{% endif %}
 
 
 # Message authentication codes
@@ -72,7 +72,7 @@ if use_aes256-ctr %},aes256-ctr{% endif %}
 #     hmac-ripemd160,
 #     umac-128@openssh.com
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com{%
-if use_hmac-sha2-512 %},hmac-sha2-512{% endif %}
+if use_hmac_sha2_512 %},hmac-sha2-512{% endif %}
 
 
 # Allow client to pass locale environment variables
