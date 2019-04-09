@@ -13,6 +13,12 @@ sshd_default_allowed_groups:
 # Enable AllowUsers and AllowGroups options
 restrict_allow_users: True
 
+# Require ed25519 key
+only_allow_ed25519: true 
+
 # Allow login with password?
 sshd_password_authentication: 'no' # 'yes' or 'no'
- 
+
+# Allow optional cryptho methods (NOT RECOMENDED)
+generate_ecdsa_too: false
+use_diffie-hellman-group-exchange-sha256: false

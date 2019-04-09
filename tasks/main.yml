@@ -29,6 +29,15 @@
   notify:
     - restart ssh
 
+- name: Generate new ecdsa ssh host key pair if necessary
+  become: yes
+  command: ssh-keygen -t ecdsa -f 'ssh_host_ecdsa_key' -P '' -q
+  args:
+    chdir: '/etc/ssh/'
+    creates: 'ssh_host_ecdsa_key.pub'
+  notify:
+    - restart ssh
+  when: generate_ecdsa_too
 
 - name: Generate new ed25519 ssh host key pair if necessary
   become: yes
@@ -45,11 +54,24 @@
     path: '/etc/ssh/ssh_host_{{ item }}_key'
     state: absent
   with_items:
+    - rsa
+    - dsa
+  notify:
+    - restart ssh
+  when: generate_ecdsa_too 
+
+- name: Remove unwanted host keys
+  become: yes
+  file:
+    path: '/etc/ssh/ssh_host_{{ item }}_key'
+    state: absent
+  with_items:
     - ecdsa
     - rsa
     - dsa
   notify:
     - restart ssh
+  when: generate_ecdsa_too == false
 
 - file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
@@ -61,4 +83,15 @@
     - dsa
   notify:
     - restart ssh
+  when: generate_ecdsa_too == false
 
+- file:
+    path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
+    state: absent
+  become: yes
+  with_items:
+    - rsa
+    - dsa
+  notify:
+    - restart ssh
+  when: generate_ecdsa_too
