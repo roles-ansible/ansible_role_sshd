@@ -20,7 +20,7 @@
 - name: Copy sshd configuration
   become: yes
   template:
-    src: sshd_config
+    src: sshd_config.j2
     dest: '/etc/ssh/sshd_config'
     owner: root
     group: root
