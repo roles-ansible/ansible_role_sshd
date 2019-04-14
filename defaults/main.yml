@@ -1,4 +1,7 @@
 ---
+# set the ssh port
+ssh_port: 22
+
 # default users for SSH access
 sshd_default_allowed_users:
   - "root"
