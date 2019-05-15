@@ -27,7 +27,7 @@
 
 - name: Check if your version is outdated
   fail:
-    msg: "Your current ansible module has the version '{{ playbook_version_number }}' and is outdated. Please update it at least to version '{{ playbook_version.content | default('Y3VycmVudGx5IG5vdCBkZXBsb3llZAo=') | b64decode }}'!"
+    msg: "Your ansible module has the version '{{ playbook_version_number }}' and is outdated. You need to update it!"
   when:
     - playbook_version.content|default("Mgo=")|b64decode|int - 1 >= playbook_version_number|int and submodules_versioncheck
 
