@@ -20,10 +20,8 @@ galaxy_info:
       versions:
         - 28
         - 29
-        - 30
   galaxy_tags:
     - ssh
     - sshd
-    - secure shell
-    - ssh config
+    - authorisation
 dependencies: []
