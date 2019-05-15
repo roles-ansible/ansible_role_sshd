@@ -73,7 +73,7 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too == false
+  when: not generate_ecdsa_too
 
 - name: make sure the correct keys are available
   file:
