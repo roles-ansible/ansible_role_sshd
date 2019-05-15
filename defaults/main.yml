@@ -12,11 +12,10 @@ sshd_default_allowed_groups:
   - "root"
   - "admins"
 
-
 # Enable AllowUsers and AllowGroups options
 restrict_allow_users: True
 
-# Require ed25519 key
+# Forcing only ed25519 SSH keys
 only_allow_ed25519: true 
 
 # Allow login with password?
@@ -27,3 +26,6 @@ generate_ecdsa_too: false
 use_diffie_hellman_group_exchange_sha256: false
 use_aes256_ctr: false
 use_hmac_sha2_512: false
+
+# version check for this playbook
+submodules_versioncheck: true

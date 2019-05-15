@@ -1,0 +1,5 @@
+---
+playbook_version_number: 100
+playbook_version_path: '/etc/ansible-version/role-sshd_chaos-bodensee_github.com.version' 
+
+
