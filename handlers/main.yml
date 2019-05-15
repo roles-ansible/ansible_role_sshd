@@ -5,4 +5,3 @@
     name: "{{ ssh_service }}"
     state: restarted
   when: ssh_service is defined
-
