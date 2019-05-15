@@ -4,13 +4,13 @@
 
 - name: register os-specific variables
   include_vars: default.yml
-  when: 
+  when:
    - ansible_distribution != 'Fedora'
    - ansible_distribution != 'Archlinux'
 
 - name: register os-specific variables
   include_vars: "{{ ansible_distribution }}.yml"
-  when: 
+  when:
    - ansible_distribution == 'Fedora'
    - ansible_distribution == 'Archlinux'
 
@@ -60,7 +60,7 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too 
+  when: generate_ecdsa_too
 
 - name: Remove unwanted host keys
   become: yes
