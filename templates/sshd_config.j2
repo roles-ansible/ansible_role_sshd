@@ -1,19 +1,16 @@
 # Attention, do not make changes
 # {{ ansible_managed }}
 
-
 # Networking
 Port {{ ssh_port }}
 
 TCPKeepAlive yes
-
 
 # Key exchange
 #KexAlgorithms curve25519-sha256@libssh.org,
 #              diffie-hellman-group-exchange-sha256
 KexAlgorithms curve25519-sha256@libssh.org{%
 if use_diffie_hellman_group_exchange_sha256 %},diffie-hellman-group-exchange-sha256{% endif %}
-
 
 # Server authentication
 Protocol 2
@@ -34,7 +31,6 @@ PubkeyAuthentication yes
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
-
 # User Authentication
 {% if restrict_allow_users|default(True) %}
 AllowUsers {{ sshd_allow_users|join(' ') }}
@@ -49,7 +45,6 @@ StrictModes yes
 # Not available in openssh 6.7
 {% if only_allow_ed25519 == false %}# {%
 endif %}PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
-
 
 # Symmetric ciphers
 #Ciphers chacha20-poly1305@openssh.com,
@@ -82,6 +77,5 @@ PrintMotd no
 
 # sftp (required by ansible)
 Subsystem sftp /usr/lib/openssh/sftp-server
-
 
 # ETC
