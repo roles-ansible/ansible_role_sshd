@@ -1,6 +1,6 @@
 ---
 - include_tasks: versioncheck.yml
-  when: submodules_versioncheck
+  when: submodules_versioncheck|bool
 
 - name: register os-specific variables
   include_vars: default.yml
