@@ -39,7 +39,7 @@
     creates: 'ssh_host_ecdsa_key.pub'
   notify:
     - restart ssh
-  when: generate_ecdsa_too
+  when: generate_ecdsa_too|bool
 
 - name: Generate new ed25519 ssh host key pair if necessary
   become: yes
@@ -86,7 +86,7 @@
     - dsa
   notify:
     - restart ssh
-  when: not generate_ecdsa_too
+  when: not generate_ecdsa_too|bool
 
 - name: make sure the correct keys are available except ecdsa
   file:
@@ -98,4 +98,4 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too
+  when: generate_ecdsa_too|bool
