@@ -60,7 +60,7 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too
+  when: generate_ecdsa_too|bool
 
 - name: Remove unwanted host keys
   become: yes
@@ -73,7 +73,7 @@
     - dsa
   notify:
     - restart ssh
-  when: not generate_ecdsa_too
+  when: not generate_ecdsa_too|bool
 
 - name: make sure the correct keys are available
   file:
