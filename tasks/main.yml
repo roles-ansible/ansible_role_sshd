@@ -7,12 +7,14 @@
   when:
    - ansible_distribution != 'Fedora'
    - ansible_distribution != 'Archlinux'
+   - ansible_distribution != 'Centos'
 
 - name: register os-specific variables
   include_vars: "{{ ansible_distribution }}.yml"
   when:
    - ansible_distribution == 'Fedora'
    - ansible_distribution == 'Archlinux'
+   - ansible_distribution == 'Centos'
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
