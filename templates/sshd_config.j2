@@ -9,8 +9,14 @@ TCPKeepAlive yes
 # Key exchange
 #KexAlgorithms curve25519-sha256@libssh.org,
 #              diffie-hellman-group-exchange-sha256
-KexAlgorithms curve25519-sha256@libssh.org{%
-if use_diffie_hellman_group_exchange_sha256 %},diffie-hellman-group-exchange-sha256{% endif %}
+{% if ansible_distribution_release == 'wheezy' -%}
+  KexAlgorithms diffie-hellman-group-exchange-sha256
+{%- else -%}
+  KexAlgorithms diffie-hellman-group-exchange-sha256
+  {%- if use_diffie_hellman_group_exchange_sha256 -%}
+    ,diffie-hellman-group-exchange-sha256
+  {%- endif -%}
+{%- endif %}
 
 # Server authentication
 Protocol 2
@@ -53,8 +59,14 @@ endif %}PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
 #        aes256-ctr,
 #        aes192-ctr,
 #        aes128-ctr
-Ciphers chacha20-poly1305@openssh.com{%
-if use_aes256_ctr %},aes256-ctr{% endif %}
+{% if ansible_distribution_release == 'wheezy' -%}
+  Ciphers aes192-ctr,aes256-ctr,arcfour256
+{%- else -%}
+  Ciphers chacha20-poly1305@openssh.com
+  {%- if use_aes256_ctr -%}
+    ,aes256-ctr
+  {%- endif -%}
+{%- endif %}
 
 
 # Message authentication codes
@@ -66,9 +78,14 @@ if use_aes256_ctr %},aes256-ctr{% endif %}
 #     hmac-sha2-256,
 #     hmac-ripemd160,
 #     umac-128@openssh.com
-MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com{%
-if use_hmac_sha2_512 %},hmac-sha2-512{% endif %}
-
+{% if ansible_distribution_release == 'wheezy' -%}
+  MACs hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+{%- else -%}
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
+  {%- if use_hmac_sha2_512 -%}
+    ,hmac-sha2-512
+  {%- endif -%}
+{%- endif %}
 
 # Allow client to pass locale environment variables
 AcceptEnv LANG LC_*

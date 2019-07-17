@@ -51,6 +51,7 @@
     creates: 'ssh_host_ed25519_key.pub'
   notify:
     - restart ssh
+  when: ansible_distribution_release != 'wheezy'
 
 - name: Remove unwanted host keys
   become: yes
@@ -62,7 +63,9 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too|bool
+  when:
+    - generate_ecdsa_too|bool
+    - ansible_distribution_release != 'wheezy'
 
 - name: Remove unwanted host keys
   become: yes
@@ -75,7 +78,9 @@
     - dsa
   notify:
     - restart ssh
-  when: not generate_ecdsa_too|bool
+  when:
+    - not generate_ecdsa_too|bool
+    - ansible_distribution_release != 'wheezy'
 
 - name: make sure the correct keys are available
   file:
@@ -88,7 +93,9 @@
     - dsa
   notify:
     - restart ssh
-  when: not generate_ecdsa_too|bool
+  when:
+    - not generate_ecdsa_too|bool
+    - ansible_distribution_release != 'wheezy'
 
 - name: make sure the correct keys are available except ecdsa
   file:
@@ -100,4 +107,6 @@
     - dsa
   notify:
     - restart ssh
-  when: generate_ecdsa_too|bool
+  when:
+    - generate_ecdsa_too|bool
+    - ansible_distribution_release != 'wheezy'
