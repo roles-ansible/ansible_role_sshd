@@ -20,14 +20,14 @@ TCPKeepAlive yes
 
 # Server authentication
 Protocol 2
-{% if ansible_distribution_release == 'wheezy' -%}
-  # HostKey /etc/ssh/ssh_host_ed25519_key
+{% if ansible_distribution_release == 'wheezy' %}
+# HostKey /etc/ssh/ssh_host_ed25519_key
 {% else %}
-  HostKey /etc/ssh/ssh_host_ed25519_key
-  {%- if generate_ecdsa_too %}
+HostKey /etc/ssh/ssh_host_ed25519_key
+{% if generate_ecdsa_too %}
 HostKey /etc/ssh/ssh_host_ecdsa_key
-  {%- endif -%}
-{%- endif %}
+  {% endif %}
+{% endif %}
 # Not available in openssh 6.7
 # HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
 
