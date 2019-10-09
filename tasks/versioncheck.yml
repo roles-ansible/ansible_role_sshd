@@ -2,7 +2,7 @@
 - name: Create directory for versionscheck
   become: true
   file:
-    path: '/etc/ansible-version'
+    path: '/etc/.ansible-version'
     state: directory
     mode: 0755
   when: submodules_versioncheck|bool
