@@ -43,7 +43,6 @@
     - restart ssh
   when:
     - generate_ecdsa_too | bool
-    - generate_modern_ssh_keys | bool
 
 - name: Generate new ed25519 ssh host key pair if necessary
   become: yes
@@ -55,7 +54,6 @@
     - restart ssh
   when:
     - ansible_distribution_release != 'wheezy'
-    - generate_modern_ssh_keys | bool
 
 - name: Remove unwanted host keys
   become: yes
@@ -70,7 +68,7 @@
   when:
     - generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
-    - generate_modern_ssh_keys | bool
+    - do_not_delete_legacy_ssh_keys | bool
 
 - name: Remove unwanted host keys
   become: yes
@@ -86,7 +84,7 @@
   when:
     - not generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
-    - generate_modern_ssh_keys | bool
+    - do_not_delete_legacy_ssh_keys | bool
 
 - name: make sure the correct keys are available
   file:
@@ -102,7 +100,7 @@
   when:
     - not generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
-    - generate_modern_ssh_keys | bool
+    - do_not_delete_legacy_ssh_keys | bool
 
 - name: make sure the correct keys are available except ecdsa
   file:
@@ -117,4 +115,4 @@
   when:
     - generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
-    - generate_modern_ssh_keys | bool
+    - do_not_delete_legacy_ssh_keys | bool
