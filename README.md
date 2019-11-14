@@ -7,6 +7,14 @@ Use Eliptic cureve cryptografie for your ssh keys e.g.:
 ssh-keygen -t ed25519
 ```
 
+ combinations
+---------------
+It is highly recomended to use this role together with a role to manage users and to manage the sshd configuration.<br/>
+The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
+ - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git)
+ - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git)
+ - [github.com/chaos-bodensee/role_sshd](https://github.com/chaos-bodensee/role_sshd.git) *(this one)*
+
 
  Some Variables explained
 ------------------------------
@@ -41,7 +49,6 @@ users:
    - ottojo@home
 ```
 -> This means l3d and ottojo are able to login.
-
 
 
  Files
