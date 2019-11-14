@@ -27,5 +27,7 @@ use_diffie_hellman_group_exchange_sha256: false
 use_aes256_ctr: false
 use_hmac_sha2_512: false
 
+generate_modern_ssh_keys: true
+
 # version check for this role?
 submodules_versioncheck: true
