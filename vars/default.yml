@@ -1,3 +1,2 @@
 ---
 ssh_service: ssh
-sftp_server: '/usr/lib/openssh/sftp-server'

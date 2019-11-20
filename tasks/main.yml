@@ -3,14 +3,14 @@
   when: submodules_versioncheck|bool
 
 - name: register os-specific variables
-  include_vars: default.yml
+  include_vars: vars/default.yml
   when:
    - ansible_distribution != 'Fedora'
    - ansible_distribution != 'Archlinux'
    - ansible_distribution != 'CentOS'
 
 - name: register os-specific variables
-  include_vars: "{{ ansible_distribution | lower }}.yml"
+  include_vars: "vars/{{ ansible_distribution | lower }}.yml"
   when:
    - ansible_distribution == 'Fedora'
    - ansible_distribution == 'Archlinux'

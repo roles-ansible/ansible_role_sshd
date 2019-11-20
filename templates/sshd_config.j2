@@ -98,6 +98,10 @@ PrintMotd no
 
 # sftp (required by ansible)
 # Subsystem sftp /usr/lib/openssh/sftp-server
-Subsystem sftp {{ sftp_server }}
+{% if ansible_os_family == 'Redhat' %}
+Subsystem sftp /usr/libexec/openssh/sftp-server
+{% else %}
+Subsystem sftp /usr/lib/openssh/sftp-server
+{% endif %}
 
 # ETC
