@@ -97,6 +97,7 @@ AcceptEnv LANG LC_*
 PrintMotd no
 
 # sftp (required by ansible)
-Subsystem sftp /usr/lib/openssh/sftp-server
+# Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp {{ sftp_binary }}
 
 # ETC

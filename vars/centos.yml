@@ -1,2 +1,3 @@
 ---
 ssh_service: sshd
+sftp_server: '/usr/libexec/openssh/sftp-server'
