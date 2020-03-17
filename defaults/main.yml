@@ -1,33 +1,45 @@
 ---
-# set the ssh port
-ssh_port: 22
+sshd:
+  # set the ssh server port
+  port: 22
+  # ssh password authorisatuin (not recomended)
+  password_authentication: false
+  # should we disable not selected ssh key types?
+  manage_key_types: true
+  # choose ssh server allowed key types
+  key_types:
+    - ed25519
+    # - rsa
+    # - ecdsa
+    # - dsa # (do not use!)
 
-# default users for SSH access
-sshd_default_allowed_users:
-  - "root"
-  - "ansible"
 
-# don't forget to add the ssh_access group!
-sshd_default_allowed_groups:
-  - "root"
-  - "admins"
 
-# Enable AllowUsers and AllowGroups options
-restrict_allow_users: True
+## default users for SSH access
+#sshd_default_allowed_users:
+#  - "root"
+#  - "ansible"
+#
+## don't forget to add the ssh_access group!
+#sshd_default_allowed_groups:
+#  - "root"
+#  - "admins"
+##
+## Enable AllowUsers and AllowGroups options
+#restrict_allow_users: True
+#
+### Forcing only ed25519 SSH keys
+#only_allow_ed25519: true
+#
+## Allow login with password?
+#
+### Allow optional cryptho methods (NOT RECOMENDED)
+#generate_ecdsa_too: false
+#use_diffie_hellman_group_exchange_sha256: false
+#u#se_aes256_ctr: false
+#u#se_hmac_sha2_512: false
+###
+#do_not_delete_legacy_ssh_keys: true
 
-# Forcing only ed25519 SSH keys
-only_allow_ed25519: true 
-
-# Allow login with password?
-sshd_password_authentication: 'no' # 'yes' or 'no'
-
-# Allow optional cryptho methods (NOT RECOMENDED)
-generate_ecdsa_too: false
-use_diffie_hellman_group_exchange_sha256: false
-use_aes256_ctr: false
-use_hmac_sha2_512: false
-
-do_not_delete_legacy_ssh_keys: true
-
-# version check for this role?
-submodules_versioncheck: true
+# perform simple version check for this role? (true is recomended)
+submodules_versioncheck: false

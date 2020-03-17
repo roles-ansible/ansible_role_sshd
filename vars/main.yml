@@ -1,3 +1,10 @@
 ---
-playbook_version_number: 2058 # should be over ninethousand
-playbook_version_path: 'role-sshd_chaos-bodensee_github.com.version' 
+_sshd:
+  port: 22
+  password_authentication: false
+  manage_key_types: true
+  key_types:
+    - ed25519
+
+playbook_version_number: 2060 # should be over ninethousand
+playbook_version_path: 'role-sshd_chaos-bodensee_github.com.version'
