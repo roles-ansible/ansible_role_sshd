@@ -1,20 +1,20 @@
 ---
+- name: combine sshd variable
+  set_fact:
+    sshd: "{{ _sshd|combine(sshd, recursive=True) }}"
+
 - include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
-- name: register os-specific variables
-  include_vars: vars/default.yml
-  when:
-   - ansible_distribution != 'Fedora'
-   - ansible_distribution != 'Archlinux'
-   - ansible_distribution != 'CentOS'
+- name: set sshd_service variable
+  block:
+    - name: read os specific variable
+      include_vars: "vars/{{ ansible_distribution | lower }}.yml"
+  rescue:
+    - name: read default variable
+      include_vars: vars/default.yml
 
-- name: register os-specific variables
-  include_vars: "vars/{{ ansible_distribution | lower }}.yml"
-  when:
-   - ansible_distribution == 'Fedora'
-   - ansible_distribution == 'Archlinux'
-   - ansible_distribution == 'CentOS'
+- pause:
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
