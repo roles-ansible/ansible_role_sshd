@@ -45,9 +45,13 @@ HostKeyAlgorithms
 {%- endfor %}
 
 
-{#
 # Client authentication
-PasswordAuthentication {{ sshd_password_authentication }}
+PasswordAuthentication
+{%- if sshd.password_authentication | bool -%}
+  {{ ' yes' }}
+{% else -%}
+  {{ ' no' }}
+{% endif %}
 ChallengeResponseAuthentication no
 PubkeyAuthentication yes
 
@@ -56,6 +60,7 @@ PubkeyAuthentication yes
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
+{#
 # User Authentication
 {% if restrict_allow_users|default(True) %}
 AllowUsers {{ sshd_allow_users|join(' ') }}
