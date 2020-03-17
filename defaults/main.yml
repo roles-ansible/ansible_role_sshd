@@ -13,6 +13,22 @@ sshd:
     # - ecdsa
     # - dsa # (do not use!)
 
+  key_algorithmus:
+    - 'ssh-ed25519-cert-v01@openssh.com'
+    - 'ssh-ed25519'
+    # - 'ecdsa-sha2-nistp521-cert-v01@openssh.com'
+    # - 'ecdsa-sha2-nistp384-cert-v01@openssh.com'
+    # - 'ecdsa-sha2-nistp256-cert-v01@openssh.com'
+    # - 'rsa-sha2-512-cert-v01@openssh.com'
+    # - 'rsa-sha2-256-cert-v01@openssh.com'
+    # - 'ssh-rsa-cert-v01@openssh.com'
+    # - 'ecdsa-sha2-nistp521'
+    # - 'ecdsa-sha2-nistp384'
+    # - 'ecdsa-sha2-nistp256'
+    # - 'rsa-sha2-512'
+    # - 'rsa-sha2-256'
+    # - 'ssh-rsa'
+
   kex_algorithmus:
     - 'curve25519-sha256@libssh.org'
     - 'diffie-hellman-group-exchange-sha256'

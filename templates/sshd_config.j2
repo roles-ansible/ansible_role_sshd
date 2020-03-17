@@ -26,20 +26,26 @@ MACs
 {{ ' ' }}{{ mac }}{{ "," if not loop.last }}
 {%- endfor %}
 
-{#
 # Server authentication
 Protocol 2
-{% if ansible_distribution_release == 'wheezy' %}
-# HostKey /etc/ssh/ssh_host_ed25519_key
-{% else %}
-HostKey /etc/ssh/ssh_host_ed25519_key
-{% if generate_ecdsa_too %}
-HostKey /etc/ssh/ssh_host_ecdsa_key
-  {% endif %}
-{% endif %}
-# Not available in openssh 6.7
-# HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
 
+{% if sshd.manage_key_types | bool -%}
+# host key types
+{% for key in sshd.key_types %}
+HostKey /etc/ssh/ssh_host_{{ key }}_key
+{% endfor %}
+{%- endif %}
+
+
+# HostKeyAlgorithms
+# Maybe not available in openssh 6.7
+HostKeyAlgorithms
+{%- for key in sshd.key_algorithmus -%}
+{{ ' ' }}{{ key }}{{ "," if not loop.last }}
+{%- endfor %}
+
+
+{#
 # Client authentication
 PasswordAuthentication {{ sshd_password_authentication }}
 ChallengeResponseAuthentication no
