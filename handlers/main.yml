@@ -1,7 +1,7 @@
 ---
-- name: restart ssh
+- name: systemctrl restart ssh
   become: yes
   service:
-    name: "{{ ssh_service }}"
+    name: "{{ sshd_service }}"
     state: restarted
-  when: ssh_service is defined
+  when: sshd_service is defined

@@ -32,7 +32,7 @@
     validate: /usr/sbin/sshd -t -f %s
     backup: yes
   notify:
-    - restart ssh
+    - systemctrl restart ssh
 
 - name: Generate new ecdsa ssh host key pair if necessary
   become: yes
@@ -41,7 +41,7 @@
     chdir: '/etc/ssh/'
     creates: 'ssh_host_ecdsa_key.pub'
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - generate_ecdsa_too | bool
 
@@ -52,7 +52,7 @@
     chdir: '/etc/ssh/'
     creates: 'ssh_host_ed25519_key.pub'
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - ansible_distribution_release != 'wheezy'
 
@@ -65,7 +65,7 @@
     - rsa
     - dsa
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
@@ -81,7 +81,7 @@
     - rsa
     - dsa
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - not generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
@@ -97,7 +97,7 @@
     - rsa
     - dsa
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - not generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
@@ -112,7 +112,7 @@
     - rsa
     - dsa
   notify:
-    - restart ssh
+    - systemctrl restart ssh
   when:
     - generate_ecdsa_too | bool
     - ansible_distribution_release != 'wheezy'
