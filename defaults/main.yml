@@ -13,9 +13,34 @@ sshd:
     # - ecdsa
     # - dsa # (do not use!)
 
+  kex_algorithmus:
+    - 'curve25519-sha256@libssh.org'
+    - 'diffie-hellman-group-exchange-sha256'
+    # - 'diffie-hellman-group-exchange-sha1'
+    # - 'diffie-hellman-group14-sha1'
+    # - 'diffie-hellman-group1-sha1'
+
+  ciphers:
+    - 'chacha20-poly1305@openssh.com'
+    - 'aes256-gcm@openssh.com'
+    # - 'aes256-ctr'
+    # - 'aes256-cbc'
+    # - 'aes128-ctr'
+    # - 'aes128-cbc'
+  macs:
+    - 'hmac-sha2-512-etm@openssh.com'
+    - 'hmac-sha2-256-etm@openssh.com'
+    # - 'hmac-sha2-512'
+    # - 'hmac-sha2-256'
+    # - 'hmac-ripemd160-etm@openssh.com'
+    # - 'umac-128-etm@openssh.com'
+    # - 'hmac-sha1'
 
 
-## default users for SSH access
+
+
+#
+# default users for SSH access
 #sshd_default_allowed_users:
 #  - "root"
 #  - "ansible"

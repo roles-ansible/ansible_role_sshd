@@ -7,17 +7,26 @@ Port {{ sshd.port }}
 TCPKeepAlive yes
 
 # Key exchange
-#KexAlgorithms curve25519-sha256@libssh.org,
-#              diffie-hellman-group-exchange-sha256
-{% if ansible_distribution_release == 'wheezy' -%}
-  KexAlgorithms diffie-hellman-group-exchange-sha256
-{%- else -%}
-  KexAlgorithms diffie-hellman-group-exchange-sha256
-  {%- if use_diffie_hellman_group_exchange_sha256 -%}
-    ,diffie-hellman-group-exchange-sha256
-  {%- endif -%}
-{%- endif %}
+KexAlgorithms
+{%- for algo in sshd.kex_algorithmus -%}
+{{ ' ' }}{{ algo }}{{ "," if not loop.last }}
+{%- endfor %}
 
+
+# Ciphers:
+Ciphers
+{%- for cipher in sshd.ciphers -%}
+{{ ' ' }}{{ cipher }}{{ "," if not loop.last }}
+{%- endfor %}
+
+
+# Macs
+MACs
+{%- for mac in sshd.macs -%}
+{{ ' ' }}{{ mac }}{{ "," if not loop.last }}
+{%- endfor %}
+
+{#
 # Server authentication
 Protocol 2
 {% if ansible_distribution_release == 'wheezy' %}
@@ -105,3 +114,4 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 {% endif %}
 
 # ETC
+#}
