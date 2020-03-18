@@ -58,6 +58,12 @@ PubkeyAuthentication yes
 PermitRootLogin without-password
 LoginGraceTime 120
 StrictModes yes
+X11Forwarding
+{%- if sshd.xforwarding | bool -%}
+  {{ ' yes' }}
+{% else -%}
+  {{ ' no' }}
+{% endif %}
 
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication

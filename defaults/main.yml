@@ -60,6 +60,7 @@ sshd:
   allowed_groups:
     - "root"
     - "admins"
+  xforwarding: True
 
 #
 ### Forcing only ed25519 SSH keys

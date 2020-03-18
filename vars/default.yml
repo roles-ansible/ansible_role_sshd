@@ -1,2 +1,4 @@
 ---
 sshd_service: ssh
+sshd_xauth:
+  - xorg-xauth

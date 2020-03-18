@@ -31,30 +31,19 @@
     backup: yes
   notify:
     - systemctrl restart ssh
+
+- name: Generate new ssh host key pair if necessary
+  become: yes
+  command: ssh-keygen -t ecdsa -f 'ssh_host_{{ item }}_key' -P '' -q
+  args:
+    chdir: '/etc/ssh/'
+    creates: 'ssh_host_{{ item }}_key.pub'
+  notify:
+    - systemctrl restart ssh
+  with_items: "{{ sshd.key_types }}"
+  when:
+    - sshd.manage_key_types | bool
 - pause:
-
-
-- name: Generate new ecdsa ssh host key pair if necessary
-  become: yes
-  command: ssh-keygen -t ecdsa -f 'ssh_host_ecdsa_key' -P '' -q
-  args:
-    chdir: '/etc/ssh/'
-    creates: 'ssh_host_ecdsa_key.pub'
-  notify:
-    - systemctrl restart ssh
-  when:
-    - generate_ecdsa_too | bool
-
-- name: Generate new ed25519 ssh host key pair if necessary
-  become: yes
-  command: ssh-keygen -t ed25519 -f 'ssh_host_ed25519_key' -P '' -q
-  args:
-    chdir: '/etc/ssh/'
-    creates: 'ssh_host_ed25519_key.pub'
-  notify:
-    - systemctrl restart ssh
-  when:
-    - ansible_distribution_release != 'wheezy'
 
 - name: Remove unwanted host keys
   become: yes
@@ -66,10 +55,6 @@
     - dsa
   notify:
     - systemctrl restart ssh
-  when:
-    - generate_ecdsa_too | bool
-    - ansible_distribution_release != 'wheezy'
-    - do_not_delete_legacy_ssh_keys | bool
 
 - name: Remove unwanted host keys
   become: yes
