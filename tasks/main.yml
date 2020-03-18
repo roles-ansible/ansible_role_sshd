@@ -43,7 +43,6 @@
   with_items: "{{ sshd.key_types }}"
   when:
     - sshd.manage_key_types | bool
-- pause:
 
 - name: Remove unwanted host keys
   become: yes
@@ -55,50 +54,23 @@
     - dsa
   notify:
     - systemctrl restart ssh
-
-- name: Remove unwanted host keys
-  become: yes
-  file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key'
-    state: absent
-  with_items:
-    - ecdsa
-    - rsa
-    - dsa
-  notify:
-    - systemctrl restart ssh
-  when:
-    - not generate_ecdsa_too | bool
-    - ansible_distribution_release != 'wheezy'
-    - do_not_delete_legacy_ssh_keys | bool
 
 - name: make sure the correct keys are available
   file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
+    path: '/etc/ssh/ssh_host_{{ item }}_key'
     state: absent
   become: yes
   with_items:
-    - ecdsa
-    - rsa
-    - dsa
+    - "{{ sshd_key_types_list | difference( sshd.key_types ) }}"
   notify:
     - systemctrl restart ssh
-  when:
-    - not generate_ecdsa_too | bool
-    - ansible_distribution_release != 'wheezy'
-    - do_not_delete_legacy_ssh_keys | bool
 
-- name: make sure the correct keys are available except ecdsa
+- name: make sure the correct pubkeys are available
   file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
     state: absent
   become: yes
   with_items:
-    - rsa
-    - dsa
+    - "{{ sshd_key_types_list | difference( sshd.key_types ) }}"
   notify:
     - systemctrl restart ssh
-  when:
-    - generate_ecdsa_too | bool
-    - ansible_distribution_release != 'wheezy'
-    - do_not_delete_legacy_ssh_keys | bool

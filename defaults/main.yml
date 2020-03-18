@@ -8,10 +8,10 @@ sshd:
   manage_key_types: true
   # choose ssh server allowed key types
   key_types:
-    - ed25519
-    # - rsa
-    # - ecdsa
-    # - dsa # (do not use!)
+    - 'ed25519'
+    # - 'rsa'
+    # - 'ecdsa'
+    # - 'dsa' # (do not use!)
 
   key_algorithmus:
     - 'ssh-ed25519-cert-v01@openssh.com'
