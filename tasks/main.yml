@@ -14,10 +14,10 @@
     - name: read default variable
       include_vars: vars/default.yml
 
-#- name: Collect all users and groups allowed to login via ssh
-#  set_fact:
-#    sshd_allow_users:  '{{ sshd_default_allowed_users + users.keys() | default({}) | sort }}'
-#    sshd_allow_groups: '{{ sshd_default_allowed_groups + users.keys() | default({}) | sort }}'
+- name: Collect all users and groups allowed to login via ssh
+  set_fact:
+    sshd_allowed_users:  '{{ sshd.allowed_users + users.keys() | default({}) | sort }}'
+    sshd_allowed_groups: '{{ sshd.allowed_groups + users.keys() | default({}) | sort }}'
 
 - name: Copy sshd configuration
   become: yes
@@ -27,7 +27,7 @@
     owner: root
     group: root
     mode: 'u=rw,g=r,o=r'
-#    validate: /usr/sbin/sshd -t -f %s
+    validate: /usr/sbin/sshd -t -f %s
     backup: yes
   notify:
     - systemctrl restart ssh

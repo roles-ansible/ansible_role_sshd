@@ -1,4 +1,5 @@
 # Attention, local changew will be overwritten
+# MIT (C) L3D
 # {{ ansible_managed }}
 
 # Networking
@@ -7,23 +8,23 @@ Port {{ sshd.port }}
 TCPKeepAlive yes
 
 # Key exchange
-KexAlgorithms
+{{ 'KexAlgorithms ' }}
 {%- for algo in sshd.kex_algorithmus -%}
-{{ ' ' }}{{ algo }}{{ "," if not loop.last }}
+{{ algo }}{{ "," if not loop.last }}
 {%- endfor %}
 
 
 # Ciphers:
-Ciphers
+{{ 'Ciphers ' }}
 {%- for cipher in sshd.ciphers -%}
-{{ ' ' }}{{ cipher }}{{ "," if not loop.last }}
+{{ cipher }}{{ "," if not loop.last }}
 {%- endfor %}
 
 
 # Macs
-MACs
+{{ 'MACs ' }}
 {%- for mac in sshd.macs -%}
-{{ ' ' }}{{ mac }}{{ "," if not loop.last }}
+{{ mac }}{{ "," if not loop.last }}
 {%- endfor %}
 
 # Server authentication
@@ -39,9 +40,9 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 
 # HostKeyAlgorithms
 # Maybe not available in openssh 6.7
-HostKeyAlgorithms
+{{ 'HostKeyAlgorithms ' }}
 {%- for key in sshd.key_algorithmus -%}
-{{ ' ' }}{{ key }}{{ "," if not loop.last }}
+{{ key }}{{ "," if not loop.last }}
 {%- endfor %}
 
 
@@ -54,61 +55,21 @@ PasswordAuthentication
 {% endif %}
 ChallengeResponseAuthentication no
 PubkeyAuthentication yes
+PermitRootLogin without-password
+LoginGraceTime 120
+StrictModes yes
 
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
-{#
 # User Authentication
-{% if restrict_allow_users|default(True) %}
-AllowUsers {{ sshd_allow_users|join(' ') }}
-AllowGroups {{ sshd_allow_groups|join(' ') }}
-{% endif %}
-PermitRootLogin without-password
-
-LoginGraceTime 120
-
-StrictModes yes
-
-# Not available in openssh 6.7
-{% if only_allow_ed25519 == false %}# {%
-endif %}PubkeyAcceptedKeyTypes ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
-
-# Symmetric ciphers
-#Ciphers chacha20-poly1305@openssh.com,
-#        aes256-gcm@openssh.com,
-#        aes128-gcm@openssh.com,
-#        aes256-ctr,
-#        aes192-ctr,
-#        aes128-ctr
-{% if ansible_distribution_release == 'wheezy' -%}
-  Ciphers aes192-ctr,aes256-ctr,arcfour256
-{%- else -%}
-  Ciphers chacha20-poly1305@openssh.com
-  {%- if use_aes256_ctr -%}
-    ,aes256-ctr
-  {%- endif -%}
+{% if sshd.restrict_users -%}
+  AllowUsers {{ sshd_allowed_users|join(' ') }}
 {%- endif %}
-
-
-# Message authentication codes
-#MACs hmac-sha2-512-etm@openssh.com,
-#     hmac-sha2-256-etm@openssh.com,
-#     hmac-ripemd160-etm@openssh.com,
-#     umac-128-etm@openssh.com,
-#     hmac-sha2-512,
-#     hmac-sha2-256,
-#     hmac-ripemd160,
-#     umac-128@openssh.com
-{% if ansible_distribution_release == 'wheezy' -%}
-  MACs hmac-sha1,umac-64@openssh.com,hmac-ripemd160
-{%- else -%}
-  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
-  {%- if use_hmac_sha2_512 -%}
-    ,hmac-sha2-512
-  {%- endif -%}
+{% if sshd.restrict_groups -%}
+  AllowUsers {{ sshd_allowed_groups|join(' ') }}
 {%- endif %}
 
 # Allow client to pass locale environment variables
@@ -123,6 +84,3 @@ Subsystem sftp /usr/libexec/openssh/sftp-server
 {% else %}
 Subsystem sftp /usr/lib/openssh/sftp-server
 {% endif %}
-
-# ETC
-#}

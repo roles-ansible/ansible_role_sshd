@@ -51,23 +51,16 @@ sshd:
     # - 'hmac-ripemd160-etm@openssh.com'
     # - 'umac-128-etm@openssh.com'
     # - 'hmac-sha1'
+  # Enable AllowUsers and AllowGroups options
+  restrict_users: True
+  allowed_users:
+    - "root"
+    - "ansible"
+  restrict_groups: True
+  allowed_groups:
+    - "root"
+    - "admins"
 
-
-
-
-#
-# default users for SSH access
-#sshd_default_allowed_users:
-#  - "root"
-#  - "ansible"
-#
-## don't forget to add the ssh_access group!
-#sshd_default_allowed_groups:
-#  - "root"
-#  - "admins"
-##
-## Enable AllowUsers and AllowGroups options
-#restrict_allow_users: True
 #
 ### Forcing only ed25519 SSH keys
 #only_allow_ed25519: true
