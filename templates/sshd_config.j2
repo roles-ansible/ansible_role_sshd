@@ -1,9 +1,16 @@
 # Attention, local changew will be overwritten
 # MIT (C) L3D
 # {{ ansible_managed }}
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+Include /etc/ssh/sshd_config.d/*.conf
 
 # Networking
 Port {{ sshd.port }}
+AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
 
 TCPKeepAlive yes
 
@@ -14,11 +21,17 @@ TCPKeepAlive yes
 {%- endfor %}
 
 
-# Ciphers:
+# Ciphers and keying
+#RekeyLimit default none
+
 {{ 'Ciphers ' }}
 {%- for cipher in sshd.ciphers -%}
 {{ cipher }}{{ "," if not loop.last }}
 {%- endfor %}
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
 
 
 # Macs
@@ -27,8 +40,9 @@ TCPKeepAlive yes
 {{ mac }}{{ "," if not loop.last }}
 {%- endfor %}
 
-# Server authentication
+# Server Authentication
 Protocol 2
+
 
 {% if sshd.manage_key_types | bool -%}
 # host key types
@@ -47,6 +61,8 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 
 
 # Client authentication
+MaxAuthTries 6
+MaxSessions 10
 PasswordAuthentication
 {%- if sshd.password_authentication | bool -%}
   {{ ' yes' }}
@@ -64,6 +80,31 @@ X11Forwarding
 {% else -%}
   {{ ' no' }}
 {% endif %}
+
+AllowTcpForwarding yes
+#GatewayPorts no
+#X11DisplayOffset 10
+#X11UseLocalhost yes
+#PermitTTY yes
+
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+
+#PermitUserEnvironment no
+#Compression delayed
+#ClientAliveInterval 0
+#ClientAliveCountMax 3
+#UseDNS no
+#PidFile /var/run/sshd.pid
+#MaxStartups 10:30:100
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+
+# no default banner path
+#Banner none
+
 
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
