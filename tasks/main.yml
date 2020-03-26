@@ -9,10 +9,10 @@
 - name: set sshd_service variable
   block:
     - name: read os specific variable
-      include_vars: "vars/{{ ansible_distribution | lower }}.yml"
+      include_vars: "vars/sshd_{{ ansible_distribution | lower }}.yml"
   rescue:
     - name: read default variable
-      include_vars: vars/default.yml
+      include_vars: vars/sshd_default.yml
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
