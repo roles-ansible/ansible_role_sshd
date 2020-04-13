@@ -19,19 +19,6 @@
     sshd_allowed_users:  '{{ sshd.allowed_users + users.keys() | default({}) | sort }}'
     sshd_allowed_groups: '{{ sshd.allowed_groups + users.keys() | default({}) | sort }}'
 
-- name: Copy sshd configuration
-  become: yes
-  template:
-    src: sshd_config.j2
-    dest: '/etc/ssh/sshd_config'
-    owner: root
-    group: root
-    mode: 'u=rw,g=r,o=r'
-    validate: /usr/sbin/sshd -t -f %s
-    backup: yes
-  notify:
-    - systemctrl restart ssh
-
 - name: Generate new ssh host key pair if necessary
   become: yes
   command: ssh-keygen -t ecdsa -f 'ssh_host_{{ item }}_key' -P '' -q
@@ -72,5 +59,18 @@
   become: yes
   with_items:
     - "{{ sshd_key_types_list | difference( sshd.key_types ) }}"
+  notify:
+    - systemctrl restart ssh
+
+- name: Copy sshd configuration
+  become: yes
+  template:
+    src: sshd_config.j2
+    dest: '/etc/ssh/sshd_config'
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+    validate: /usr/sbin/sshd -t -f %s
+    backup: yes
   notify:
     - systemctrl restart ssh
