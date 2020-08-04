@@ -1,10 +1,10 @@
 ---
-sshd_service: ssh
-sshd_key_types_list:
+sshd__service: ssh
+sshd__key_types_list:
   - ed25519
   - rsa
   - ecdsa
   - dsa
 
-sshd_xauth:
+sshd__xauth:
   - xorg-xauth

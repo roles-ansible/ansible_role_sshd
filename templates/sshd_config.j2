@@ -7,7 +7,7 @@
 Include /etc/ssh/sshd_config.d/*.conf
 
 # Networking
-Port {{ sshd.port }}
+Port {{ sshd__port }}
 AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -16,7 +16,7 @@ TCPKeepAlive yes
 
 # Key exchange
 {{ 'KexAlgorithms ' }}
-{%- for algo in sshd.kex_algorithmus -%}
+{%- for algo in sshd__kex_algorithmus -%}
 {{ algo }}{{ "," if not loop.last }}
 {%- endfor %}
 
@@ -25,7 +25,7 @@ TCPKeepAlive yes
 #RekeyLimit default none
 
 {{ 'Ciphers ' }}
-{%- for cipher in sshd.ciphers -%}
+{%- for cipher in sshd__ciphers -%}
 {{ cipher }}{{ "," if not loop.last }}
 {%- endfor %}
 
@@ -36,7 +36,7 @@ LogLevel INFO
 
 # Macs
 {{ 'MACs ' }}
-{%- for mac in sshd.macs -%}
+{%- for mac in sshd__macs -%}
 {{ mac }}{{ "," if not loop.last }}
 {%- endfor %}
 
@@ -44,9 +44,9 @@ LogLevel INFO
 Protocol 2
 
 
-{% if sshd.manage_key_types | bool -%}
+{% if sshd__manage_key_types | bool -%}
 # host key types
-{% for key in sshd.key_types %}
+{% for key in sshd__key_types %}
 HostKey /etc/ssh/ssh_host_{{ key }}_key
 {% endfor %}
 {%- endif %}
@@ -55,7 +55,7 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 # HostKeyAlgorithms
 # Maybe not available in openssh 6.7
 {{ 'HostKeyAlgorithms ' }}
-{%- for key in sshd.key_algorithmus -%}
+{%- for key in sshd__key_algorithmus -%}
 {{ key }}{{ "," if not loop.last }}
 {%- endfor %}
 
@@ -64,7 +64,7 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 MaxAuthTries 6
 MaxSessions 10
 PasswordAuthentication
-{%- if sshd.password_authentication | bool -%}
+{%- if sshd__password_authentication | bool -%}
   {{ ' yes' }}
 {% else -%}
   {{ ' no' }}
@@ -75,7 +75,7 @@ PermitRootLogin without-password
 LoginGraceTime 120
 StrictModes yes
 X11Forwarding
-{%- if sshd.xforwarding | bool -%}
+{%- if sshd__xforwarding | bool -%}
   {{ ' yes' }}
 {% else -%}
   {{ ' no' }}
@@ -112,11 +112,11 @@ TCPKeepAlive yes
 UsePAM yes
 
 # User Authentication
-{% if sshd.restrict_users -%}
-  AllowUsers {{ sshd_allowed_users|join(' ') }}
+{% if sshd__restrict_users -%}
+  AllowUsers {{ sshd__allowed_users|join(' ') }}
 {%- endif %}
-{% if sshd.restrict_groups -%}
-  AllowUsers {{ sshd_allowed_groups|join(' ') }}
+{% if sshd__restrict_groups -%}
+  AllowUsers {{ sshd__allowed_groups|join(' ') }}
 {%- endif %}
 
 # Allow client to pass locale environment variables

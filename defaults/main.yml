@@ -1,80 +1,67 @@
 ---
-sshd:
-  # set the ssh server port
-  port: 22
+# set the ssh server port
+sshd__port: 22
   # ssh password authorisatuin (not recomended)
-  password_authentication: false
+sshd__password_authentication: false
   # should we disable not selected ssh key types?
-  manage_key_types: true
+sshd__manage_key_types: true
   # choose ssh server allowed key types
-  key_types:
-    - 'ed25519'
-    # - 'rsa'
-    # - 'ecdsa'
-    # - 'dsa' # (do not use!)
+sshd__key_types:
+  - 'ed25519'
+  # - 'rsa'
+  # - 'ecdsa'
+  # - 'dsa' # (do not use!)
 
-  key_algorithmus:
-    - 'ssh-ed25519-cert-v01@openssh.com'
-    - 'ssh-ed25519'
-    # - 'ecdsa-sha2-nistp521-cert-v01@openssh.com'
-    # - 'ecdsa-sha2-nistp384-cert-v01@openssh.com'
-    # - 'ecdsa-sha2-nistp256-cert-v01@openssh.com'
-    # - 'rsa-sha2-512-cert-v01@openssh.com'
-    # - 'rsa-sha2-256-cert-v01@openssh.com'
-    # - 'ssh-rsa-cert-v01@openssh.com'
-    # - 'ecdsa-sha2-nistp521'
-    # - 'ecdsa-sha2-nistp384'
-    # - 'ecdsa-sha2-nistp256'
-    # - 'rsa-sha2-512'
-    # - 'rsa-sha2-256'
-    # - 'ssh-rsa'
+sshd__key_algorithmus:
+  - 'ssh-ed25519-cert-v01@openssh.com'
+  - 'ssh-ed25519'
+  # - 'ecdsa-sha2-nistp521-cert-v01@openssh.com'
+  # - 'ecdsa-sha2-nistp384-cert-v01@openssh.com'
+  # - 'ecdsa-sha2-nistp256-cert-v01@openssh.com'
+  # - 'rsa-sha2-512-cert-v01@openssh.com'
+  # - 'rsa-sha2-256-cert-v01@openssh.com'
+  # - 'ssh-rsa-cert-v01@openssh.com'
+  # - 'ecdsa-sha2-nistp521'
+  # - 'ecdsa-sha2-nistp384'
+  # - 'ecdsa-sha2-nistp256'
+  # - 'rsa-sha2-512'
+  # - 'rsa-sha2-256'
+  # - 'ssh-rsa'
 
-  kex_algorithmus:
-    - 'curve25519-sha256@libssh.org'
-    - 'diffie-hellman-group-exchange-sha256'
-    # - 'diffie-hellman-group-exchange-sha1'
-    # - 'diffie-hellman-group14-sha1'
-    # - 'diffie-hellman-group1-sha1'
+sshd__kex_algorithmus:
+  - 'curve25519-sha256@libssh.org'
+  - 'diffie-hellman-group-exchange-sha256'
+  # - 'diffie-hellman-group-exchange-sha1'
+  # - 'diffie-hellman-group14-sha1'
+  # - 'diffie-hellman-group1-sha1'
 
-  ciphers:
-    - 'chacha20-poly1305@openssh.com'
-    - 'aes256-gcm@openssh.com'
-    # - 'aes256-ctr'
-    # - 'aes256-cbc'
-    # - 'aes128-ctr'
-    # - 'aes128-cbc'
-  macs:
-    - 'hmac-sha2-512-etm@openssh.com'
-    - 'hmac-sha2-256-etm@openssh.com'
-    # - 'hmac-sha2-512'
-    # - 'hmac-sha2-256'
-    # - 'hmac-ripemd160-etm@openssh.com'
-    # - 'umac-128-etm@openssh.com'
-    # - 'hmac-sha1'
-  # Enable AllowUsers and AllowGroups options
-  restrict_users: True
-  allowed_users:
-    - "root"
-    - "ansible"
-  restrict_groups: True
-  allowed_groups:
-    - "root"
-    - "admins"
-  xforwarding: True
+sshd__ciphers:
+  - 'chacha20-poly1305@openssh.com'
+  - 'aes256-gcm@openssh.com'
+  # - 'aes256-ctr'
+  # - 'aes256-cbc'
+  # - 'aes128-ctr'
+  # - 'aes128-cbc'
 
-#
-### Forcing only ed25519 SSH keys
-#only_allow_ed25519: true
-#
-## Allow login with password?
-#
-### Allow optional cryptho methods (NOT RECOMENDED)
-#generate_ecdsa_too: false
-#use_diffie_hellman_group_exchange_sha256: false
-#u#se_aes256_ctr: false
-#u#se_hmac_sha2_512: false
-###
-#do_not_delete_legacy_ssh_keys: true
+sshd__macs:
+  - 'hmac-sha2-512-etm@openssh.com'
+  - 'hmac-sha2-256-etm@openssh.com'
+  # - 'hmac-sha2-512'
+  # - 'hmac-sha2-256'
+  # - 'hmac-ripemd160-etm@openssh.com'
+  # - 'umac-128-etm@openssh.com'
+  # - 'hmac-sha1'
+
+# Enable AllowUsers and AllowGroups options
+sshd__restrict_users: True
+sshd__allowed_users:
+  - "root"
+  - "ansible"
+sshd__restrict_groups: True
+sshd__allowed_groups:
+  - "root"
+  - "admins"
+sshd__xforwarding: True
 
 # perform simple version check for this role? (true is recomended)
 submodules_versioncheck: false

@@ -20,23 +20,6 @@ The following roles are tested in combination and work well - at least for the u
 ------------------------------
 **Remember:** Have a look into ``defaults/main.yml`` for all possible variables.
 
-```bash
-restrict_allow_users: True
-```
-With tis option you can enable or disable if a user needs to be in a special defined group. Like wheels, sudo or something else.
-The default ddh groups are ``admins`` and ``root``
-
-```bash
-only_allow_ed25519: true 
-```
-Force ssh to deny all ssh keys except for eliptic curve ed25519 keys.
-
-```bash
-sshd_password_authentication: 'no' 
-```
-Change the string from 'no' to 'yes' if you want to log in with a password (not recomended).
-
-There are some other cryptographic algorythmen you could enable...
 
 ### Important part:
 Define the users (and optional their ssh keys) for the ssh config template:

@@ -1,8 +1,4 @@
 ---
-- name: combine sshd variable
-  set_fact:
-    sshd: "{{ _sshd|combine(sshd, recursive=True) }}"
-
 - include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
@@ -16,8 +12,8 @@
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
-    sshd_allowed_users:  '{{ sshd.allowed_users + users.keys() | default({}) | sort }}'
-    sshd_allowed_groups: '{{ sshd.allowed_groups + users.keys() | default({}) | sort }}'
+    sshd__allowed_users:  '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
+    sshd__allowed_groups: '{{ sshd__allowed_groups + users.keys() | default({}) | sort }}'
 
 - name: Generate new ssh host key pair if necessary
   become: yes
@@ -27,9 +23,9 @@
     creates: 'ssh_host_{{ item }}_key.pub'
   notify:
     - systemctrl restart ssh
-  with_items: "{{ sshd.key_types }}"
+  with_items: "{{ sshd__key_types }}"
   when:
-    - sshd.manage_key_types | bool
+    - sshd__manage_key_types | bool
 
 - name: Remove unwanted host keys
   become: yes
@@ -48,7 +44,7 @@
     state: absent
   become: yes
   with_items:
-    - "{{ sshd_key_types_list | difference( sshd.key_types ) }}"
+    - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
     - systemctrl restart ssh
 
@@ -58,7 +54,7 @@
     state: absent
   become: yes
   with_items:
-    - "{{ sshd_key_types_list | difference( sshd.key_types ) }}"
+    - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
     - systemctrl restart ssh
 
