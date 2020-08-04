@@ -63,23 +63,13 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 # Client authentication
 MaxAuthTries 6
 MaxSessions 10
-PasswordAuthentication
-{%- if sshd__password_authentication | bool -%}
-  {{ ' yes' }}
-{% else -%}
-  {{ ' no' }}
-{% endif %}
+PasswordAuthentication {{ sshd__password_authentication | ternary('yes', 'no') }}
 ChallengeResponseAuthentication no
 PubkeyAuthentication yes
 PermitRootLogin without-password
 LoginGraceTime 120
 StrictModes yes
-X11Forwarding
-{%- if sshd__xforwarding | bool -%}
-  {{ ' yes' }}
-{% else -%}
-  {{ ' no' }}
-{% endif %}
+X11Forwarding {{ sshd__xforwarding | ternary('yes', 'no') }}
 
 AllowTcpForwarding yes
 #GatewayPorts no
