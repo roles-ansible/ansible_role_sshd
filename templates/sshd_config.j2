@@ -1,10 +1,12 @@
 # Attention, local changew will be overwritten
-# MIT (C) L3D
+# MIT (C) L3D <l3d@c3woc.de>
 # {{ ansible_managed }}
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
 
+{% if sshd__version_is_above_eight | bool %}
 Include /etc/ssh/sshd_config.d/*.conf
+{% endif %}
 
 # Networking
 Port {{ sshd__port }}

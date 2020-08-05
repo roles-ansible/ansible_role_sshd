@@ -5,8 +5,7 @@
 - name: Gather the package facts
   package_facts:
     manager: auto
-
-- include_tasks: packages.yml
+  failed_when: false
 
 - name: set sshd_service variable
   block:
@@ -16,6 +15,8 @@
     - name: read default variable
       include_vars: vars/sshd_default.yml
 
+- include_tasks: packages.yml
+
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
     sshd__allowed_users:  '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
@@ -24,11 +25,17 @@
 - name: "get package version of {{ sshd__package }}"
   debug:
     msg: "{{ ansible_facts.packages[sshd__package][0].version }}"
-  when: "'{{ sshd__package }}' in ansible_facts.packages"
+  when: sshd__package in ansible_facts.packages
+  failed_when: false
+
+- name: set fact sshd__version_is_above_eight
+  set_fact:
+    sshd__version_is_above_eight: true
+  when: ansible_facts.packages[sshd__package][0].version is version('8.0', '>=')
 
 - include_tasks: keys.yml
 
-- name: Copy sshd configuration
+- name: Create sshd configuration (for sshd > 8)
   become: yes
   template:
     src: sshd_config.j2

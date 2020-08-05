@@ -1,6 +1,6 @@
 ---
-- name: "install {{ sshd__package }}"
+- name: install openssh server
   become: true
   package:
     name: "{{ sshd__package }}"
-    state: "{{ sshd_state }}"
+    state: "{{ sshd__state }}"
