@@ -35,7 +35,7 @@
 
 - include_tasks: keys.yml
 
-- name: Create sshd configuration (for sshd > 8)
+- name: Create sshd configuration
   become: yes
   template:
     src: sshd_config.j2
