@@ -2,6 +2,12 @@
 - include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+
+- include_tasks: packages.yml
+
 - name: set sshd_service variable
   block:
     - name: read os specific variable
@@ -15,48 +21,12 @@
     sshd__allowed_users:  '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
     sshd__allowed_groups: '{{ sshd__allowed_groups + users.keys() | default({}) | sort }}'
 
-- name: Generate new ssh host key pair if necessary
-  become: yes
-  command: ssh-keygen -t ecdsa -f 'ssh_host_{{ item }}_key' -P '' -q
-  args:
-    chdir: '/etc/ssh/'
-    creates: 'ssh_host_{{ item }}_key.pub'
-  notify:
-    - systemctrl restart ssh
-  with_items: "{{ sshd__key_types }}"
-  when:
-    - sshd__manage_key_types | bool
+- name: "get package version of {{ sshd__package }}"
+  debug:
+    msg: "{{ ansible_facts.packages[sshd__package][0].version }}"
+  when: "'{{ sshd__package }}' in ansible_facts.packages"
 
-- name: Remove unwanted host keys
-  become: yes
-  file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key'
-    state: absent
-  with_items:
-    - rsa
-    - dsa
-  notify:
-    - systemctrl restart ssh
-
-- name: make sure the correct keys are available
-  file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key'
-    state: absent
-  become: yes
-  with_items:
-    - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
-  notify:
-    - systemctrl restart ssh
-
-- name: make sure the correct pubkeys are available
-  file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
-    state: absent
-  become: yes
-  with_items:
-    - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
-  notify:
-    - systemctrl restart ssh
+- include_tasks: keys.yml
 
 - name: Copy sshd configuration
   become: yes
@@ -69,4 +39,4 @@
     validate: /usr/sbin/sshd -t -f %s
     backup: yes
   notify:
-    - systemctrl restart ssh
+    - systemctl restart ssh

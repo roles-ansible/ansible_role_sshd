@@ -1,0 +1,6 @@
+---
+- name: "install {{ sshd__package }}"
+  become: true
+  package:
+    name: "{{ sshd__package }}"
+    state: "{{ sshd_state }}"

@@ -1,5 +1,5 @@
 ---
-- name: systemctrl restart ssh
+- name: systemctl restart ssh
   become: yes
   service:
     name: "{{ sshd__service }}"

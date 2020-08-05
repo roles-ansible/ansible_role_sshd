@@ -63,5 +63,7 @@ sshd__allowed_groups:
   - "admins"
 sshd__xforwarding: True
 
+sshd__state: present # use latest for upgrading
+
 # perform simple version check for this role? (true is recomended)
 submodules_versioncheck: false

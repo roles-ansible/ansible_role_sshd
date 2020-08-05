@@ -8,3 +8,5 @@ sshd__key_types_list:
 
 sshd__xauth:
   - xorg-xauth
+
+sshd__package: 'openssh-server'
