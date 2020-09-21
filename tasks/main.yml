@@ -22,16 +22,24 @@
     sshd__allowed_users:  '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
     sshd__allowed_groups: '{{ sshd__allowed_groups + users.keys() | default({}) | sort }}'
 
-- name: "get package version of {{ sshd__package }}"
-  debug:
-    msg: "{{ ansible_facts.packages[sshd__package][0].version }}"
-  when: sshd__package in ansible_facts.packages
-  failed_when: false
+- name: "try to get {{ sshd__package }} version"
+  when: sshd__version_is_above_eight is not defined
+  block:
+    - name: Gather the package facts
+      package_facts:
+        manager: auto
 
-- name: set fact sshd__version_is_above_eight
-  set_fact:
-    sshd__version_is_above_eight: true
-  when: ansible_facts.packages[sshd__package][0].version is version('8.0', '>=')
+    - name: "get package version of {{ sshd__package }}"
+      debug:
+        msg: "{{ ansible_facts.packages[sshd__package][0].version }}"
+
+    - name: set fact sshd__version_is_above_eight
+      set_fact:
+        sshd__version_is_above_eight: true
+      when: ansible_facts.packages[sshd__package][0].version is version('8.0', '>=')
+  rescue:
+    - debug:
+        msg: "Failed to detect ssh version. Set sshd__version_is_above_eight to true if you want to experience new config features from sshd version 8"
 
 - include_tasks: keys.yml
 

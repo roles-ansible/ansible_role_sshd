@@ -1,4 +1,7 @@
 ---
+# enable option if know that your ssh-server version is over 8.0
+# sshd__version_is_above_eight: true
+
 # set the ssh server port
 sshd__port: 22
   # ssh password authorisatuin (not recomended)
