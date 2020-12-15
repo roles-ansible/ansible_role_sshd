@@ -106,7 +106,8 @@ UsePAM yes
 # User Authentication
 {% if sshd__restrict_users -%}
   AllowUsers {{ sshd__allowed_users|join(' ') }}
-{%- endif %}
+{% endif %}
+
 {% if sshd__restrict_groups -%}
   AllowUsers {{ sshd__allowed_groups|join(' ') }}
 {%- endif %}
