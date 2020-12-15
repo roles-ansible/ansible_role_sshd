@@ -18,9 +18,9 @@ sshd__key_types:
 sshd__key_algorithmus:
   - 'ssh-ed25519-cert-v01@openssh.com'
   - 'ssh-ed25519'
-  # - 'ecdsa-sha2-nistp521-cert-v01@openssh.com'
-  # - 'ecdsa-sha2-nistp384-cert-v01@openssh.com'
-  # - 'ecdsa-sha2-nistp256-cert-v01@openssh.com'
+  - 'ecdsa-sha2-nistp521-cert-v01@openssh.com'
+  - 'ecdsa-sha2-nistp384-cert-v01@openssh.com'
+  - 'ecdsa-sha2-nistp256-cert-v01@openssh.com'
   # - 'rsa-sha2-512-cert-v01@openssh.com'
   # - 'rsa-sha2-256-cert-v01@openssh.com'
   # - 'ssh-rsa-cert-v01@openssh.com'
@@ -34,14 +34,14 @@ sshd__key_algorithmus:
 sshd__kex_algorithmus:
   - 'curve25519-sha256@libssh.org'
   - 'diffie-hellman-group-exchange-sha256'
-  # - 'diffie-hellman-group-exchange-sha1'
+  - 'diffie-hellman-group-exchange-sha1'
   # - 'diffie-hellman-group14-sha1'
   # - 'diffie-hellman-group1-sha1'
 
 sshd__ciphers:
   - 'chacha20-poly1305@openssh.com'
   - 'aes256-gcm@openssh.com'
-  # - 'aes256-ctr'
+  - 'aes256-ctr'
   # - 'aes256-cbc'
   # - 'aes128-ctr'
   # - 'aes128-cbc'
@@ -49,7 +49,7 @@ sshd__ciphers:
 sshd__macs:
   - 'hmac-sha2-512-etm@openssh.com'
   - 'hmac-sha2-256-etm@openssh.com'
-  # - 'hmac-sha2-512'
+  - 'hmac-sha2-512'
   # - 'hmac-sha2-256'
   # - 'hmac-ripemd160-etm@openssh.com'
   # - 'umac-128-etm@openssh.com'
