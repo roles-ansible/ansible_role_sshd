@@ -17,6 +17,11 @@ AddressFamily any
 TCPKeepAlive yes
 
 # Key exchange
+{{ 'HostkeyAlgorithms ' }}
+{%- for algo in sshd__key_algorithmus -%}
+{{ algo }}{{ "," if not loop.last }}
+{%- endfor %}
+
 {{ 'KexAlgorithms ' }}
 {%- for algo in sshd__kex_algorithmus -%}
 {{ algo }}{{ "," if not loop.last }}
