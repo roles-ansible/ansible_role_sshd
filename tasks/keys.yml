@@ -1,42 +1,30 @@
 ---
 - name: Generate new ssh host key pair if necessary
-  become: yes
-  command: ssh-keygen -t ecdsa -f 'ssh_host_{{ item }}_key' -P '' -q
-  args:
-    chdir: '/etc/ssh/'
-    creates: 'ssh_host_{{ item }}_key.pub'
-  notify:
-    - systemctl restart ssh
+  become: true
+  community.crypto.openssh_keypair:
+    path: "/etc/ssh/ssh_host_{{ item }}_key"
+    type: "{{ item }}"
   with_items: "{{ sshd__key_types }}"
   when:
     - sshd__manage_key_types | bool
-
-- name: Remove unwanted host keys
-  become: yes
-  file:
-    path: '/etc/ssh/ssh_host_{{ item }}_key'
-    state: absent
-  with_items:
-    - rsa
-    - dsa
   notify:
     - systemctl restart ssh
 
-- name: make sure the correct keys are available
-  file:
+- name: make sure only the correct keys are available
+  ansible.builtin.file:
     path: '/etc/ssh/ssh_host_{{ item }}_key'
     state: absent
-  become: yes
+  become: true
   with_items:
     - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
     - systemctl restart ssh
 
-- name: make sure the correct pubkeys are available
-  file:
+- name: make sure only the correct pubkeys are available
+  ansible.builtin.file:
     path: '/etc/ssh/ssh_host_{{ item }}_key.pub'
     state: absent
-  become: yes
+  become: true
   with_items:
     - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
