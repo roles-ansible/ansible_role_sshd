@@ -1,5 +1,6 @@
 ---
-- include_tasks: versioncheck.yml
+- name: perform versionscheck
+  ansible.builtin.include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
 - name: Gather the package facts
