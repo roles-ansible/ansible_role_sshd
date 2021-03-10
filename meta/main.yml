@@ -1,25 +1,20 @@
 ---
 galaxy_info:
-  author: L3D
+  role_name: sshd
+  author: do1jlr
   description: Manage your SSH Server - and deploy a good sshd configuration
   license: "MIT"
-  min_ansible_version: 2.3
-  github_branch: master
+  min_ansible_version: 2.8
+  github_branch: main
   platforms:
     - name: Archlinux
       versions: all
     - name: Debian
-      versions:
-        - stretch
-        - sid
+      versions: all
     - name: Ubuntu
-      versions:
-        - bionic
-        - cosmic
+      versions: all
     - name: Fedora
-      versions:
-        - 28
-        - 29
+      versions: all
   galaxy_tags:
     - ssh
     - sshd
