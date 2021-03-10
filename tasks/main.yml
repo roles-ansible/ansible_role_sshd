@@ -11,7 +11,7 @@
 
 - name: Collect all users and groups allowed to login via ssh
   set_fact:
-    sshd__allowed_users:  '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
+    sshd__allowed_users: '{{ sshd__allowed_users + users.keys() | default({}) | sort }}'
     sshd__allowed_groups: '{{ sshd__allowed_groups + users.keys() | default({}) | sort }}'
 
 - name: "try to get {{ sshd__package }} version"
