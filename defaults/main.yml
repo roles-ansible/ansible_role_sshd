@@ -4,11 +4,14 @@
 
 # set the ssh server port
 sshd__port: 22
-  # ssh password authorisatuin (not recomended)
+
+# ssh password authorisatuin (not recomended)
 sshd__password_authentication: false
-  # should we disable not selected ssh key types?
+
+# should we disable not selected ssh key types?
 sshd__manage_key_types: true
-  # choose ssh server allowed key types
+
+# choose ssh server allowed key types
 sshd__key_types:
   - 'ed25519'
   # - 'rsa'
@@ -56,17 +59,17 @@ sshd__macs:
   # - 'hmac-sha1'
 
 # Enable AllowUsers and AllowGroups options
-sshd__restrict_users: True
+sshd__restrict_users: true
 sshd__allowed_users:
   - "root"
   - "ansible"
-sshd__restrict_groups: True
+sshd__restrict_groups: true
 sshd__allowed_groups:
   - "root"
   - "admins"
-sshd__xforwarding: True
+sshd__xforwarding: true
 
-sshd__state: present # use latest for upgrading
+sshd__state: present  # use latest for upgrading
 
 # perform simple version check for this role? (true is recomended)
 submodules_versioncheck: false
