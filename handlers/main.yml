@@ -1,7 +1,7 @@
 ---
 - name: systemctl restart ssh
   become: yes
-  service:
+  ansible.builtin.systemd:
     name: "{{ sshd__service }}"
     state: restarted
   when: sshd__service is defined

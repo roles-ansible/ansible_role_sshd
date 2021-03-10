@@ -1,6 +1,6 @@
 ---
 - name: install openssh server
   become: true
-  package:
+  ansible.builtin.package:
     name: "{{ sshd__package }}"
     state: "{{ sshd__state }}"

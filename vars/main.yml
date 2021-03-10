@@ -1,3 +1,10 @@
 ---
-playbook_version_number: 4100  # should be over ninethousand
+playbook_version_number: 4101  # should be over ninethousand
 playbook_version_path: 'role-sshd_chaos-bodensee_github.com.version'
+
+sshd__service_var_path:
+  files:
+    - "sshd_{{ ansible_distribution | lower }}"
+    - 'sshd_default.yml'
+  paths:
+    - 'vars'
