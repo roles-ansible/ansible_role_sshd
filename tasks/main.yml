@@ -30,7 +30,8 @@
         sshd__version_is_above_eight: true
       when: ansible_facts.packages[sshd__package][0].version is version('8.0', '>=')
   rescue:
-    - ansible.builtin.debug:
+    - name: leave notice if version detection failed
+      ansible.builtin.debug:
         msg: "Failed to detect ssh version. Set sshd__version_is_above_eight to true if you want to experience new config features from sshd version 8"
 
 - name: manage ssh host keys
