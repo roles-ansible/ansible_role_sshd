@@ -1,0 +1,18 @@
+---
+name: Ansible check fedora:31
+
+# yamllint disable-line rule:truthy
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ansible check with fedora:31
+        uses: roles-ansible/check-ansible-fedora-31-action@master
+        with:
+          targets: "./"
