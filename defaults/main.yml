@@ -2,6 +2,14 @@
 # enable option if know that your ssh-server version is over 8.0
 # sshd__version_is_above_eight: true
 
+# define users for ssh whitelist
+users: {}
+# l3d:
+#   - l3d
+# ottojo:
+#  - ottojo@uni
+#  - ottojo@home
+
 # set the ssh server port
 sshd__port: 22
 
