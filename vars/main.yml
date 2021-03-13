@@ -1,5 +1,5 @@
 ---
-playbook_version_number: 4125  # should be int
+playbook_version_number: 5000  # should be int
 playbook_version_path: 'role-sshd_chaos-bodensee_github.com.version'
 
 sshd__service_var_path:
