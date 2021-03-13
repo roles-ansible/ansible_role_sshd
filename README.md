@@ -61,7 +61,7 @@ users:
 ```
 
 + **Advanced SSH Algorithm Settings**<br/>
-  You can define the used Key and Key Algorithm here to. For the default values and some examples for the variables ``sshd__key_algorithmus`` and ``sshd__kex_algorithmus`` have a look into ``defaults/main.yml``.
+  You can define the used Key and Kex Algorithm here to. For the default values and some examples for the variables ``sshd__key_algorithmus`` and ``sshd__kex_algorithmus`` have a look into ``defaults/main.yml``.
 
 
 + **force new SSH Features**<br/>
