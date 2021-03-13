@@ -1,4 +1,6 @@
- OpenSSH Server
+[![Ansible Galaxy](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/galaxy.svg?sanitize=true)](https://galaxy.github.com/do1jlr/sshd) [![MIT License](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/license.svg?sanitize=true)](https://github.com/roles-ansible/ansible_role_sshd/blob/main/LICENSE)
+
+OpenSSH Server
 ==============
 
 Ansible role to configure the OpenSSH `ssh` server.
