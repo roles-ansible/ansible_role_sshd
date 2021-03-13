@@ -1,13 +1,18 @@
-[![Ansible Galaxy](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/galaxy.svg?sanitize=true)](https://galaxy.github.com/do1jlr/sshd) [![MIT License](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/license.svg?sanitize=true)](https://github.com/roles-ansible/ansible_role_sshd/blob/main/LICENSE)
+[![Ansible Galaxy](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/galaxy.svg?sanitize=true)](https://galaxy.ansible.com/do1jlr/sshd) [![MIT License](https://raw.githubusercontent.com/roles-ansible/ansible_role_sshd/main/.github/license.svg?sanitize=true)](https://github.com/roles-ansible/ansible_role_sshd/blob/main/LICENSE)
 
 OpenSSH Server
 ==============
 
-Ansible role to configure the OpenSSH `ssh` server.
-Use Eliptic cureve cryptografie for your ssh keys e.g.:
+Ansible role to configure the OpenSSH Server ``SSHD``.
+The main goal of this role is to manage the sshd.conf file. And some additional parts like deploying the defined ssh host keys at the configured path.
+
+ Pro Tipp
+----------------
+Use Eliptic cureve cryptografie for your ssh keys:
 ```bash
 ssh-keygen -t ed25519
 ```
+*The defualt values of this role will only allow ed25519 keys. But you can change that obviously if you like.*
 
  combinations
 ---------------
