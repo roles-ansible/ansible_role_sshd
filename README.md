@@ -12,7 +12,7 @@ Use Eliptic cureve cryptografie for your ssh keys:
 ```bash
 ssh-keygen -t ed25519
 ```
-*The defualt values of this role will only allow ed25519 keys. But you can change that obviously if you like.*
+*The default values of this role will only allow ed25519 keys. But you can change that obviously if you like.*
 
  combinations
 ---------------
