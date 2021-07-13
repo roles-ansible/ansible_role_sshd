@@ -16,11 +16,13 @@ AddressFamily any
 
 TCPKeepAlive yes
 
+{% if sshd__manage_key_algorithmus | bool %}
 # Key exchange
 {{ 'HostkeyAlgorithms ' }}
 {%- for algo in sshd__key_algorithmus -%}
 {{ algo }}{{ "," if not loop.last }}
 {%- endfor %}
+{% endif %}
 
 {{ 'KexAlgorithms ' }}
 {%- for algo in sshd__kex_algorithmus -%}
@@ -58,13 +60,14 @@ HostKey /etc/ssh/ssh_host_{{ key }}_key
 {% endfor %}
 {%- endif %}
 
-
+{% if sshd__manage_kex_algorithmus | bool -%}
 # HostKeyAlgorithms
 # Maybe not available in openssh 6.7
 {{ 'HostKeyAlgorithms ' }}
 {%- for key in sshd__key_algorithmus -%}
 {{ key }}{{ "," if not loop.last }}
 {%- endfor %}
+{% endif %}
 
 
 # Client authentication

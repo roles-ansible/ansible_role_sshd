@@ -62,6 +62,7 @@ users:
 
 + **Advanced SSH Algorithm Settings**<br/>
   You can define the used Key and Kex Algorithm here to. For the default values and some examples for the variables ``sshd__key_algorithmus`` and ``sshd__kex_algorithmus`` have a look into ``defaults/main.yml``.
+  You can disable it by setting ``sshd__manage_key_algorithmus`` and ``sshd__manage_kex_algorithmus`` to ``false``.
 
 
 + **force new SSH Features**<br/>

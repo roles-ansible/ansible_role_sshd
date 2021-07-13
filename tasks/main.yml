@@ -49,3 +49,4 @@
     backup: true
   notify:
     - systemctl restart ssh
+    - service restart ssh

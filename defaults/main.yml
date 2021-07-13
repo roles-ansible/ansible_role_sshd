@@ -26,6 +26,7 @@ sshd__key_types:
   # - 'ecdsa'
   # - 'dsa' # (do not use!)
 
+sshd__manage_key_algorithmus: true
 sshd__key_algorithmus:
   - 'ssh-ed25519-cert-v01@openssh.com'
   - 'ssh-ed25519'
@@ -42,6 +43,7 @@ sshd__key_algorithmus:
   # - 'rsa-sha2-256'
   # - 'ssh-rsa'
 
+sshd__manage_kex_algorithmus: true
 sshd__kex_algorithmus:
   - 'curve25519-sha256@libssh.org'
   - 'diffie-hellman-group-exchange-sha256'

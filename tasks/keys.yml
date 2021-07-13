@@ -9,6 +9,7 @@
     - sshd__manage_key_types | bool
   notify:
     - systemctl restart ssh
+    - service restart ssh
 
 - name: make sure only the correct keys are available
   ansible.builtin.file:
@@ -19,6 +20,7 @@
     - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
     - systemctl restart ssh
+    - service restart ssh
 
 - name: make sure only the correct pubkeys are available
   ansible.builtin.file:
@@ -29,3 +31,4 @@
     - "{{ sshd__key_types_list | difference( sshd__key_types ) }}"
   notify:
     - systemctl restart ssh
+    - service restart ssh
