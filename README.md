@@ -14,14 +14,22 @@ ssh-keygen -t ed25519
 ```
 *The default values of this role will only allow ed25519 keys. But you can change that obviously if you like.*
 
- combinations
+ intended use
 ---------------
-It is highly recomended to use this role together with a role to manage users and to manage the sshd configuration.<br/>
-The following roles are tested in combination and work well - at least for the user [DO1JLR](https://github.com/do1jlr):
- - [github.com/chaos-bodensee/role-manage_users](https://github.com/chaos-bodensee/role-manage_users.git)
- - [github.com/chaos-bodensee/role-ssh_authorized_keys](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git)
- - [github.com/roles-ansible/ansible_role_sshd](https://github.com/roles-ansible/ansible_role_sshd.git) *(this one)*
+This role is designed to manage linux hosts with the following roles. This role here basically only focuses on a good configuration of sshd and can define which users are allowd to use connect via ssh and which ssh key types are allowd.
+Other roles distribute ssh public keys, creating users and configure sudo permission, roll out dotfiles or install a number of useful packages.
 
+A list of suggested roles to manage your linux host:
+ - [do1jlr.base](https://github.com/roles-ansible/ansible_role_base.git) *install some useful packages*
+ - [do1jlr.users](https://github.com/roles-ansible/ansible_role_users.git) *create user and manage sudoers*
+ - [do1jlr.auth](https://github.com/chaos-bodensee/role-ssh_authorized_keys.git) *deploy ssh pubkeys*
+ - [do1jlr.sshd](https://github.com/roles-ansible/ansible_role_sshd.git) *(this one)*
+ - [do1jlr.dotfiles](https://github.com/roles-ansible/ansible_role_dotfiles) *deploy some fancy dotfiles*
+
+ Good to know:
+---------------
+The listed roles use the same variables to create accounts, admins and so on. But the roles have to run in the correct order to work properly.
+For example you can't deploy a ssh public key for a user that is not created.
 
  Some Variables explained
 ------------------------------
@@ -89,4 +97,3 @@ If you want to find out more about our tests, please have a look at the github m
 | [![Galaxy release](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/galaxy.yml/badge.svg)](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/galaxy.yml) | [publish-ansible-role-to-galaxy](https://github.com/marketplace/actions/publish-ansible-role-to-galaxy) |
 | [![Yamllint GitHub Actions](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/yamllint.yaml/badge.svg)](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/yamllint.yaml) | [yamllint-github-action](https://github.com/marketplace/actions/yamllint-github-action) |
 | [![Ansible Lint check](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/ansible-linting-check.yml/badge.svg)](https://github.com/roles-ansible/ansible_role_sshd/actions/workflows/ansible-linting-check.yml) | [ansible-lint action](https://github.com/marketplace/actions/ansible-lint)
-
