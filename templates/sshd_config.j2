@@ -117,7 +117,7 @@ UsePAM yes
 {% endif %}
 
 {% if sshd__restrict_groups -%}
-  AllowUsers {{ sshd__allowed_groups|join(' ') }}
+  AllowGroups {{ sshd__allowed_groups|join(' ') }}
 {%- endif %}
 
 # Allow client to pass locale environment variables
