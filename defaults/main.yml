@@ -51,6 +51,7 @@ sshd__kex_algorithmus:
   # - 'diffie-hellman-group14-sha1'
   # - 'diffie-hellman-group1-sha1'
 
+sshd__manage_ciphers: true
 sshd__ciphers:
   - 'chacha20-poly1305@openssh.com'
   - 'aes256-gcm@openssh.com'
@@ -59,6 +60,7 @@ sshd__ciphers:
   # - 'aes128-ctr'
   # - 'aes128-cbc'
 
+sshd__manage_macs: true
 sshd__macs:
   - 'hmac-sha2-512-etm@openssh.com'
   - 'hmac-sha2-256-etm@openssh.com'
