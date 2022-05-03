@@ -5,6 +5,7 @@
 # sshd_config(5) for more information.
 
 {% if sshd__version_is_above_eight | default(false) | bool %}
+# Include SSHD config snippets
 Include /etc/ssh/sshd_config.d/*.conf
 {% endif %}
 
@@ -16,58 +17,56 @@ AddressFamily any
 
 TCPKeepAlive yes
 
-{% if sshd__manage_key_algorithmus | bool %}
-# Key exchange
+# SSHD Key exchange
+# -> HostkeyAlgorithms
+{% if not sshd__manage_key_algorithmus | bool %}#{% endif -%}
 {{ 'HostkeyAlgorithms ' }}
 {%- for algo in sshd__key_algorithmus -%}
-{{ algo }}{{ "," if not loop.last }}
+  {{- algo -}}
+  {{- "," if not loop.last -}}
 {%- endfor %}
-{% endif %}
 
+# -> KexAlgorithms
+{% if not sshd__manage_kex_algorithmus | bool %}#{% endif -%}
 {{ 'KexAlgorithms ' }}
 {%- for algo in sshd__kex_algorithmus -%}
-{{ algo }}{{ "," if not loop.last }}
+  {{- algo -}}
+  {{- "," if not loop.last -}}
 {%- endfor %}
 
 
 # Ciphers and keying
-#RekeyLimit default none
-
+# RekeyLimit default none
+# -> Ciphers
+{% if not sshd__manage_ciphers | bool %}#{% endif -%}
 {{ 'Ciphers ' }}
 {%- for cipher in sshd__ciphers -%}
-{{ cipher }}{{ "," if not loop.last }}
+  {{- cipher -}}
+  {{- "," if not loop.last -}}
 {%- endfor %}
 
-# Logging
-SyslogFacility AUTH
-LogLevel INFO
 
-
-# Macs
+# -> Macs
+{% if not sshd__manage_macs | bool %}#{% endif -%}
 {{ 'MACs ' }}
 {%- for mac in sshd__macs -%}
-{{ mac }}{{ "," if not loop.last }}
+  {{- mac -}}
+  {{- "," if not loop.last -}}
 {%- endfor %}
 
 # Server Authentication
 Protocol 2
 
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
 
-{% if sshd__manage_key_types | bool -%}
-# host key types
+# SSHD Host Keys
 {% for key in sshd__key_types %}
+# -> {{ key }}
+{% if not sshd__manage_key_types | bool %}#{% endif -%}
 HostKey /etc/ssh/ssh_host_{{ key }}_key
 {% endfor %}
-{%- endif %}
-
-{% if sshd__manage_kex_algorithmus | bool -%}
-# HostKeyAlgorithms
-# Maybe not available in openssh 6.7
-{{ 'HostKeyAlgorithms ' }}
-{%- for key in sshd__key_algorithmus -%}
-{{ key }}{{ "," if not loop.last }}
-{%- endfor %}
-{% endif %}
 
 
 # Client authentication
@@ -112,18 +111,15 @@ TCPKeepAlive yes
 UsePAM yes
 
 # User Authentication
-{% if sshd__restrict_users -%}
-  AllowUsers {{ sshd__allowed_users|join(' ') }}
-{% endif %}
+{% if not sshd__restrict_users -%}#{%- endif -%}
+AllowUsers {{ sshd__allowed_users|join(' ') }}
 
-{% if sshd__restrict_groups -%}
-  AllowGroups {{ sshd__allowed_groups|join(' ') }}
-{%- endif %}
+# Group Authentication
+{% if not sshd__restrict_groups -%}#{%- endif -%}
+AllowGroups {{ sshd__allowed_groups|join(' ') }}
 
 # Allow client to pass locale environment variables
 AcceptEnv LANG LC_*
-
-PrintMotd no
 
 # sftp (required by ansible)
 # Subsystem sftp /usr/lib/openssh/sftp-server
