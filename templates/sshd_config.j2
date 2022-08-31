@@ -125,6 +125,8 @@ AcceptEnv LANG LC_*
 # Subsystem sftp /usr/lib/openssh/sftp-server
 {% if ansible_os_family == 'RedHat' %}
 Subsystem sftp /usr/libexec/openssh/sftp-server
+{% elif ansible_os_family == 'Archlinux' %}
+Subsystem sftp /usr/lib/ssh/sftp-server
 {% else %}
 Subsystem sftp /usr/lib/openssh/sftp-server
 {% endif %}
